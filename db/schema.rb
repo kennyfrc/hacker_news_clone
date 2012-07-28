@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120724212313) do
+ActiveRecord::Schema.define(:version => 20120727221544) do
 
   create_table "comments", :force => true do |t|
     t.text     "body"
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(:version => 20120724212313) do
     t.integer  "user_id"
   end
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
@@ -45,13 +55,15 @@ ActiveRecord::Schema.define(:version => 20120724212313) do
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
   create_table "votes", :force => true do |t|
-    t.integer  "post_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "votable_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.integer  "user_id"
+    t.string   "votable_type"
+    t.integer  "vote_value"
   end
 
-  add_index "votes", ["post_id"], :name => "index_votes_on_post_id"
   add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
+  add_index "votes", ["votable_id"], :name => "index_votes_on_post_id"
 
 end
