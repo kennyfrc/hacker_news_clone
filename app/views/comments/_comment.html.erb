@@ -8,7 +8,7 @@
   </div>
 
   <%= 'Submitted by: ' %>
-  <%= link_to comment.author, user_path %>
+  <%= link_to comment.author.name, user_path(params[:author]) %>
 
 
   <% unless comment.comments.empty? %>

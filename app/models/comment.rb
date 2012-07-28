@@ -17,7 +17,6 @@ class Comment < ActiveRecord::Base
   end
 
    def author
-     user = User.find_by_id(self.user_id)
-     user.name
+     User.find_by_id(self.user_id)
    end
 end
