@@ -29,12 +29,17 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params[:post])
-    @post.user_id = current_user.id
-      if @post.save
-        redirect_to posts_path
+    if signed_in?
+      @post = Post.new(params[:post])
+      @post.user_id = current_user.id
+        if @post.save
+          redirect_to posts_path
+        else
+          render action: "new"
+        end
       else
-        render action: "new"
+        redirect_to(signin_path)
+        flash[:error] = "You must sign in to post"
       end
   end
 end
